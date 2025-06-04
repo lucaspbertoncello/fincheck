@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id          String        @id @default(uuid()) @db.Uuid
-  name        String
-  email       String        @unique
-  password    String
-  BankAccout  BankAccout[]
-  Category    Category[]
-  Transaction Transaction[]
+  id           String        @id @default(uuid()) @db.Uuid
+  name         String
+  email        String        @unique
+  password     String
+  bankAccounts BankAccout[]
+  categories   Category[]
+  transactions Transaction[]
 
   @@map("users")
 }
@@ -35,7 +35,7 @@ model BankAccout {
   type           BankAccountTypes
   color          String
   user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Transaction    Transaction[]
+  transactions   Transaction[]
 
   @@map("bank_accounts")
 }
@@ -48,13 +48,13 @@ enum TransactionsTypes {
 }
 
 model Category {
-  id          String            @id @default(uuid()) @db.Uuid
-  userId      String            @map("user_id") @db.Uuid()
-  name        String
-  icon        String
-  type        TransactionsTypes
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Transaction Transaction[]
+  id           String            @id @default(uuid()) @db.Uuid
+  userId       String            @map("user_id") @db.Uuid()
+  name         String
+  icon         String
+  type         TransactionsTypes
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
 
   @@map("categories")
 }
