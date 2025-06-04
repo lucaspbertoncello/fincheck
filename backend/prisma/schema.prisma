@@ -6,3 +6,72 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String        @id @default(uuid()) @db.Uuid
+  name        String
+  email       String        @unique
+  password    String
+  BankAccout  BankAccout[]
+  Category    Category[]
+  Transaction Transaction[]
+
+  @@map("users")
+}
+
+enum BankAccountTypes {
+  CHECKING
+  INVESTMENT
+  CASH
+
+  @@map("bank_account_types")
+}
+
+model BankAccout {
+  id             String           @id @default(uuid()) @db.Uuid
+  userId         String           @map("user_id") @db.Uuid
+  name           String
+  initialBalance Float            @map("initial_balance")
+  type           BankAccountTypes
+  color          String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transaction    Transaction[]
+
+  @@map("bank_accounts")
+}
+
+enum TransactionsTypes {
+  INCOME
+  EXPENSE
+
+  @@map("transaction_types")
+}
+
+model Category {
+  id          String            @id @default(uuid()) @db.Uuid
+  userId      String            @map("user_id") @db.Uuid()
+  name        String
+  icon        String
+  type        TransactionsTypes
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transaction Transaction[]
+
+  @@map("categories")
+}
+
+model Transaction {
+  id            String            @id @default(uuid()) @db.Uuid
+  userId        String            @map("user_id") @db.Uuid()
+  categoryId    String            @map("category_id") @db.Uuid()
+  bankAccountId String            @map("bank_Account_id") @db.Uuid()
+  name          String
+  value         Float
+  date          DateTime
+  type          TransactionsTypes
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  bankAccount BankAccout @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
+}
