@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 
-import { AuthenticateDto } from "./dto/authenticate.dto";
-import { CreateUserDto } from "./dto/create-user.dto";
+import { SigninDto } from "./dto/signin.dto";
+import { SignupDto } from "./dto/signup.dto";
 
 import { UsersRepository } from "src/shared/database/repositories/users.repositories";
 
@@ -15,8 +15,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async authenticate(authDto: AuthenticateDto) {
-    const { email, password } = authDto;
+  async signin(signinDto: SigninDto) {
+    const { email, password } = signinDto;
 
     const user = await this.usersRepo.findUnique({ where: { email } });
 
@@ -30,13 +30,13 @@ export class AuthService {
       throw new UnauthorizedException("Invalid password");
     }
 
-    const acessToken = await this.jwtService.signAsync({ sub: user.id });
+    const acessToken = await this.generateAcessToken(user.id);
 
     return { acessToken };
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const { name, email, password } = createUserDto;
+  async signup(signupDto: SignupDto) {
+    const { name, email, password } = signupDto;
 
     const emailExists = await this.usersRepo.findUnique({ where: { email } });
 
@@ -67,6 +67,12 @@ export class AuthService {
       },
     });
 
-    return user;
+    const acessToken = await this.generateAcessToken(user.id);
+
+    return { acessToken };
+  }
+
+  private generateAcessToken(userId: string) {
+    return this.jwtService.signAsync({ sub: userId });
   }
 }
