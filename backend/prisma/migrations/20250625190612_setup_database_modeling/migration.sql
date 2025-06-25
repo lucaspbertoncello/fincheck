@@ -41,7 +41,7 @@ CREATE TABLE "categories" (
 CREATE TABLE "transactions" (
     "id" UUID NOT NULL,
     "user_id" UUID NOT NULL,
-    "category_id" UUID NOT NULL,
+    "category_id" UUID,
     "bank_Account_id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
@@ -64,7 +64,7 @@ ALTER TABLE "categories" ADD CONSTRAINT "categories_user_id_fkey" FOREIGN KEY ("
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "transactions" ADD CONSTRAINT "transactions_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "transactions" ADD CONSTRAINT "transactions_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_bank_Account_id_fkey" FOREIGN KEY ("bank_Account_id") REFERENCES "bank_accounts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
