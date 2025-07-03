@@ -12,7 +12,7 @@ model User {
   name         String
   email        String        @unique
   password     String
-  bankAccounts BankAccout[]
+  bankAccounts BankAccount[]
   categories   Category[]
   transactions Transaction[]
 
@@ -27,7 +27,7 @@ enum BankAccountTypes {
   @@map("bank_account_types")
 }
 
-model BankAccout {
+model BankAccount {
   id             String           @id @default(uuid()) @db.Uuid
   userId         String           @map("user_id") @db.Uuid
   name           String
@@ -69,9 +69,9 @@ model Transaction {
   date          DateTime
   type          TransactionsTypes
 
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category    Category?  @relation(fields: [categoryId], references: [id])
-  bankAccount BankAccout @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category?   @relation(fields: [categoryId], references: [id])
+  bankAccount BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
 
   @@map("transactions")
 }
