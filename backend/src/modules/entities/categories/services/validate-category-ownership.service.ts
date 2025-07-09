@@ -5,7 +5,11 @@ import { CategoriesRepository } from "src/shared/database/repositories/categorie
 export class ValidateCategoryOwnershipService {
   constructor(private readonly categoriesRepo: CategoriesRepository) {}
 
-  async validate(userId: string, categoryId: string): Promise<boolean> {
+  async validate(userId: string, categoryId: string | undefined): Promise<boolean | null> {
+    if (!categoryId) {
+      return null;
+    }
+
     const isOwner = await this.categoriesRepo.findFirst({ where: { userId, id: categoryId } });
 
     if (!isOwner) {
