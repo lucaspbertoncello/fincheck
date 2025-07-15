@@ -10,7 +10,6 @@ import {
   HttpCode,
   Query,
   ParseIntPipe,
-  ParseEnumPipe,
 } from "@nestjs/common";
 
 import { TransactionsService } from "./transactions.service";
