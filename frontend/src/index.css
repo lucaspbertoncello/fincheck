@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 @import "tailwindcss";
 @layer base {
   :root {
@@ -143,5 +145,9 @@
     --colors-orange-700: #f76707;
     --colors-orange-800: #e8590c;
     --colors-orange-900: #d9480f;
+  }
+
+  html {
+    font-family: "DM sans", sans-serif;
   }
 }
