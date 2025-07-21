@@ -18,7 +18,7 @@ export function Input({ placeholder, errors, ...props }: InputProps) {
           w-full h-[52px] px-3 outline-0 bg-white rounded-lg border border-gray-500 text-gray-800
           placeholder-shown:pt-0 pt-4 peer focus:border-gray-800 transition-all
         `,
-          errors && "border-red-900"
+          errors && "border-red-900 focus:border-red-900"
         )}
       />
 
