@@ -1,9 +1,16 @@
 import type { ComponentProps } from "react";
 import { cn } from "../../app/lib/cn";
 
-type ButtonProps = ComponentProps<"button">;
+interface ButtonProps extends ComponentProps<"button"> {
+  isLoading?: boolean;
+}
 
-export function Button({ className, ...props }: ButtonProps) {
+export function Button({
+  className,
+  isLoading,
+  disabled,
+  ...props
+}: ButtonProps) {
   return (
     <button
       className={cn(
@@ -14,6 +21,7 @@ export function Button({ className, ...props }: ButtonProps) {
       `,
         className
       )}
+      disabled={disabled || isLoading}
       {...props}
     />
   );
