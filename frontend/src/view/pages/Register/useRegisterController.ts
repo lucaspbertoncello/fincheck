@@ -3,6 +3,13 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { useMutation } from "@tanstack/react-query";
+
+import { authService } from "../../../app/services/authService";
+import type { ISignupRequest } from "../../../app/services/authService/signup";
+
+import toast from "react-hot-toast";
+
 const schema = z.object({
   name: z.string().nonempty("O nome é obrigatório"),
   email: z
@@ -32,9 +39,19 @@ export function useRegisterController() {
     },
   });
 
-  const handleSubmit = hookFormHandleSubmit(() => {
-    console.log("chama api para cadastro");
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: ISignupRequest) => authService.signup(data),
+    mutationKey: ["signup"],
   });
 
-  return { handleSubmit, register, errors };
+  const handleSubmit = hookFormHandleSubmit(async (data) => {
+    try {
+      const { acessToken } = await mutateAsync(data);
+      console.log({ acessToken });
+    } catch {
+      toast.error("Erro ao cadastrar usuário. Tente novamente.");
+    }
+  });
+
+  return { handleSubmit, register, errors, isPending };
 }

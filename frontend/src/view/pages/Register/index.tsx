@@ -5,7 +5,7 @@ import { Input } from "../../components/Input";
 import { useRegisterController } from "./useRegisterController";
 
 export function Register() {
-  const { register, handleSubmit, errors } = useRegisterController();
+  const { register, handleSubmit, errors, isPending } = useRegisterController();
 
   return (
     <div className="w-full">
@@ -47,7 +47,9 @@ export function Register() {
           errors={errors.password?.message}
         />
 
-        <Button type="submit">Criar conta</Button>
+        <Button isLoading={isPending} type="submit">
+          Criar conta
+        </Button>
       </form>
     </div>
   );

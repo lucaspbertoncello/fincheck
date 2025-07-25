@@ -1,6 +1,14 @@
-import { useForm } from "react-hook-form";
+import z from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
+
+import { useMutation } from "@tanstack/react-query";
+
+import { authService } from "../../../app/services/authService";
+import type { ISigninRequest } from "../../../app/services/authService/signin";
+
+import toast from "react-hot-toast";
 
 const schema = z.object({
   email: z
@@ -29,9 +37,21 @@ export function useLoginController() {
     },
   });
 
-  const handleSubmit = hookFormHandleSubmit(() => {
-    console.log("chama api");
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: ISigninRequest) => authService.signin(data),
+    mutationKey: ["signin"],
   });
 
-  return { handleSubmit, register, errors };
+  const handleSubmit = hookFormHandleSubmit(async (data) => {
+    try {
+      const { acessToken } = await mutateAsync(data);
+      console.log({ acessToken });
+    } catch {
+      toast.error(
+        "Erro ao fazer login. Verifique suas credenciais e tente novamente."
+      );
+    }
+  });
+
+  return { handleSubmit, register, errors, isPending };
 }
