@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 import { cn } from "../../app/lib/cn";
 import { Spinner } from "./Spinner";
 
-interface ButtonProps extends ComponentProps<"button"> {
+interface IButtonProps extends ComponentProps<"button"> {
   isLoading?: boolean;
 }
 
@@ -12,7 +12,7 @@ export function Button({
   disabled,
   children,
   ...props
-}: ButtonProps) {
+}: IButtonProps) {
   return (
     <button
       className={cn(

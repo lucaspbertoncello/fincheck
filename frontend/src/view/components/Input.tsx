@@ -2,11 +2,11 @@ import type { ComponentProps } from "react";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { cn } from "../../app/lib/cn";
 
-interface InputProps extends ComponentProps<"input"> {
+interface IInputProps extends ComponentProps<"input"> {
   errors?: string;
 }
 
-export function Input({ placeholder, errors, ...props }: InputProps) {
+export function Input({ placeholder, errors, ...props }: IInputProps) {
   return (
     <div className="relative">
       <input

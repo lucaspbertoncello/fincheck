@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-interface AuthGuardProps {
+interface IAuthGuardProps {
   isPrivate?: boolean;
 }
 
-export function AuthGuard({ isPrivate = true }: AuthGuardProps) {
+export function AuthGuard({ isPrivate = true }: IAuthGuardProps) {
   const isAuthenticated = false; // replace with auth logic
 
   if (!isAuthenticated && isPrivate) {
