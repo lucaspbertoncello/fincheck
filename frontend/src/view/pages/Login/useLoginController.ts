@@ -9,6 +9,7 @@ import { authService } from "../../../app/services/authService";
 import type { ISigninRequest } from "../../../app/services/authService/signin";
 
 import toast from "react-hot-toast";
+import { useAuth } from "../../../app/hooks/useAuth";
 
 const schema = z.object({
   email: z
@@ -42,10 +43,13 @@ export function useLoginController() {
     mutationKey: ["signin"],
   });
 
+  const { signin } = useAuth();
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
       const { acessToken } = await mutateAsync(data);
-      console.log({ acessToken });
+      signin(acessToken);
+      toast.success("Login realizado com sucesso!");
     } catch {
       toast.error(
         "Erro ao fazer login. Verifique suas credenciais e tente novamente."

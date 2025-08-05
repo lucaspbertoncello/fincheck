@@ -9,6 +9,7 @@ import { authService } from "../../../app/services/authService";
 import type { ISignupRequest } from "../../../app/services/authService/signup";
 
 import toast from "react-hot-toast";
+import { useAuth } from "../../../app/hooks/useAuth";
 
 const schema = z.object({
   name: z.string().nonempty("O nome é obrigatório"),
@@ -44,10 +45,13 @@ export function useRegisterController() {
     mutationKey: ["signup"],
   });
 
+  const { signin } = useAuth();
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
       const { acessToken } = await mutateAsync(data);
-      console.log({ acessToken });
+      signin(acessToken);
+      toast.success("Usuário cadastrado com sucesso!");
     } catch {
       toast.error("Erro ao cadastrar usuário. Tente novamente.");
     }
