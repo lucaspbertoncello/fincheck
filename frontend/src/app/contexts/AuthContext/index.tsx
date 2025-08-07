@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { AuthContext } from "./context";
 import { localStorageKeys } from "../../config/localStorageKeys";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { userService } from "../../services/userService";
 import toast from "react-hot-toast";
+import { PageLoader } from "../../../view/components/PageLoader";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -11,7 +12,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!storedAcessToken;
   });
 
-  const { isError } = useQuery({
+  const queryClient = useQueryClient();
+
+  const { isError, isFetching, isSuccess } = useQuery({
     queryKey: ["users", "me"],
     queryFn: () => userService.me(),
     enabled: isAuthenticated, // only execute if authenticated
@@ -28,7 +31,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signout = useCallback(() => {
     localStorage.removeItem(localStorageKeys.ACESS_TOKEN);
     setIsAuthenticated(false);
-  }, []);
+
+    queryClient.removeQueries({ queryKey: ["users", "me"] });
+    queryClient.clear();
+  }, [queryClient]);
 
   useEffect(() => {
     if (isError) {
@@ -38,8 +44,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isError, signout]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signin, signout }}>
-      {children}
+    <AuthContext.Provider
+      value={{ isAuthenticated: isSuccess && isAuthenticated, signin, signout }}
+    >
+      <PageLoader isLoading={isFetching} />
+      {!isFetching && children}
     </AuthContext.Provider>
   );
 }
