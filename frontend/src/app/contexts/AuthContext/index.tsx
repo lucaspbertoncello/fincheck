@@ -15,6 +15,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     queryKey: ["users", "me"],
     queryFn: () => userService.me(),
     enabled: isAuthenticated, // only execute if authenticated
+    staleTime: Infinity, // do not refetch unless necessary
+    refetchOnReconnect: true, // refetch when the browser reconnects
+    refetchOnWindowFocus: false, // do not refetch on window focus
   });
 
   const signin = useCallback((acessToken: string) => {
