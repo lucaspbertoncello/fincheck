@@ -30,7 +30,7 @@ export function Accounts() {
           <Swiper spaceBetween={16} slidesPerView={2.1}>
             <header
               slot="container-start"
-              className="flex items-center justify-between"
+              className="mb-4 flex items-center justify-between"
             >
               <strong className="text-lg tracking-[-1px] text-white">
                 Minhas contas
@@ -39,34 +39,32 @@ export function Accounts() {
               <AccountsSliderNavigation />
             </header>
 
-            <div className="mt-4">
-              <SwiperSlide>
-                <AccountCard
-                  color="#7950f2"
-                  bankAccountName="Nubank"
-                  balance={9845.33}
-                  bankAccountIcon="CASH"
-                />
-              </SwiperSlide>
+            <SwiperSlide>
+              <AccountCard
+                color="#7950f2"
+                bankAccountName="Nubank"
+                balance={9845.33}
+                bankAccountIcon="CASH"
+              />
+            </SwiperSlide>
 
-              <SwiperSlide>
-                <AccountCard
-                  color="#ff7f08"
-                  bankAccountName="Inter"
-                  balance={333.21}
-                  bankAccountIcon="CHECKING"
-                />
-              </SwiperSlide>
+            <SwiperSlide>
+              <AccountCard
+                color="#ff7f08"
+                bankAccountName="Inter"
+                balance={333.21}
+                bankAccountIcon="CHECKING"
+              />
+            </SwiperSlide>
 
-              <SwiperSlide>
-                <AccountCard
-                  color="#ba1e62"
-                  bankAccountName="Bradesco"
-                  balance={100000.0}
-                  bankAccountIcon="INVESTMENT"
-                />
-              </SwiperSlide>
-            </div>
+            <SwiperSlide>
+              <AccountCard
+                color="#ba1e62"
+                bankAccountName="Bradesco"
+                balance={100000.0}
+                bankAccountIcon="INVESTMENT"
+              />
+            </SwiperSlide>
           </Swiper>
         </div>
       </div>
