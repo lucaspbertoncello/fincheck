@@ -4,11 +4,10 @@ import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { AccountsSliderNavigation } from "./AccountsSliderNavigation";
-import { useState } from "react";
+import { useAccountsController } from "./useAccountsController";
 
 export function Accounts() {
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
+  const { sliderState, setSliderState } = useAccountsController();
 
   return (
     <div className="flex h-full w-full flex-col gap-2 rounded-2xl bg-teal-900 px-4 py-8 md:p-10">
@@ -35,8 +34,10 @@ export function Accounts() {
             spaceBetween={16}
             slidesPerView={2.1}
             onSlideChange={(swiper) => {
-              setIsBeginning(swiper.isBeginning);
-              setIsEnd(swiper.isEnd);
+              setSliderState({
+                isBeginning: swiper.isBeginning,
+                isEnd: swiper.isEnd,
+              });
             }}
           >
             <header
@@ -48,8 +49,8 @@ export function Accounts() {
               </strong>
 
               <AccountsSliderNavigation
-                isBeginning={isBeginning}
-                isEnd={isEnd}
+                isBeginning={sliderState.isBeginning}
+                isEnd={sliderState.isEnd}
               />
             </header>
 
