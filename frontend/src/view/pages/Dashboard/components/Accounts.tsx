@@ -4,8 +4,12 @@ import { EyeIcon } from "../../../components/icons/EyeIcon";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { AccountsSliderNavigation } from "./AccountsSliderNavigation";
+import { useState } from "react";
 
 export function Accounts() {
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+
   return (
     <div className="flex h-full w-full flex-col gap-2 rounded-2xl bg-teal-900 px-4 py-8 md:p-10">
       {/* top area */}
@@ -27,7 +31,14 @@ export function Accounts() {
       {/* bank accounts area */}
       <div className="flex flex-1 flex-col justify-end">
         <div>
-          <Swiper spaceBetween={16} slidesPerView={2.1}>
+          <Swiper
+            spaceBetween={16}
+            slidesPerView={2.1}
+            onSlideChange={(swiper) => {
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+          >
             <header
               slot="container-start"
               className="mb-4 flex items-center justify-between"
@@ -36,7 +47,10 @@ export function Accounts() {
                 Minhas contas
               </strong>
 
-              <AccountsSliderNavigation />
+              <AccountsSliderNavigation
+                isBeginning={isBeginning}
+                isEnd={isEnd}
+              />
             </header>
 
             <SwiperSlide>
