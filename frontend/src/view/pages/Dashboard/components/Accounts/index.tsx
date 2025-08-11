@@ -1,5 +1,5 @@
 import { AccountCard } from "./AccountCard";
-import { EyeIcon } from "../../../components/icons/EyeIcon";
+import { EyeIcon } from "../../../../components/icons/EyeIcon";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
