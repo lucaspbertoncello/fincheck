@@ -14,10 +14,10 @@ export function PageLoader({ isLoading }: { isLoading: boolean }) {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="w-full h-screen bg-teal-900 grid place-items-center">
+      <div className="z-[99] grid h-screen w-full place-items-center bg-teal-900">
         <div className="flex flex-col items-center gap-4">
           <img src={logo} alt="finCheck" className="h-10" />
-          <Spinner className="text-teal-900 fill-white" />
+          <Spinner className="fill-white text-teal-900" />
         </div>
       </div>
     </Transition>
