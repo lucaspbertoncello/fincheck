@@ -8,8 +8,12 @@ import { TransactionsSliderOption } from "./TransactionsSliderOption";
 import { TransactionsSliderNavigation } from "./TransactionsSliderNavigation";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
+import { useTransactionsController } from "./useTransactionsController";
+import { cn } from "../../../../../app/lib/cn";
 
 export function Transactions() {
+  const { areValuesVisible } = useTransactionsController();
+
   return (
     <div className="flex h-full w-full flex-col rounded-2xl bg-gray-100 px-4 py-8 md:p-10">
       <header>
@@ -64,7 +68,12 @@ export function Transactions() {
           {/* transaction info */}
 
           {/* transaction cost */}
-          <span className="font-medium tracking-[-0.5px] text-red-800">
+          <span
+            className={cn(
+              "font-medium tracking-[-0.5px] text-red-800",
+              !areValuesVisible && "blur-sm",
+            )}
+          >
             - {formatCurrency(1323.3)}
           </span>
           {/* transaction cost */}
@@ -87,7 +96,12 @@ export function Transactions() {
           {/* transaction info */}
 
           {/* transaction cost */}
-          <span className="font-medium tracking-[-0.5px] text-green-800">
+          <span
+            className={cn(
+              "font-medium tracking-[-0.5px] text-green-800",
+              !areValuesVisible && "blur-sm",
+            )}
+          >
             + {formatCurrency(5000.3)}
           </span>
           {/* transaction cost */}
