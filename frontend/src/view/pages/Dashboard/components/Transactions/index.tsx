@@ -14,12 +14,14 @@ import { Spinner } from "../../../../components/Spinner";
 import transactionsEmptyState from "../../../../../assets/images/transactions-empty-state.svg";
 
 export function Transactions() {
-  const { areValuesVisible, isLoading, transactions } =
+  const { areValuesVisible, isInitialLoading, isLoading, transactions } =
     useTransactionsController();
+
+  const hasTransactions = transactions.length > 0;
 
   return (
     <div className="flex h-full w-full flex-col rounded-2xl bg-gray-100 px-4 py-8 md:p-10">
-      {!isLoading && (
+      {!isInitialLoading && (
         <>
           <header>
             {/* transactions filter */}
@@ -59,7 +61,7 @@ export function Transactions() {
           </header>
 
           <div className="mt-4 flex-1 space-y-4 overflow-y-auto">
-            {transactions.length > 0 && (
+            {hasTransactions && !isLoading && (
               <>
                 {/* transaction card */}
                 <div className="flex items-center justify-between gap-4 rounded-2xl bg-white p-4">
@@ -123,23 +125,31 @@ export function Transactions() {
               </>
             )}
 
-            {transactions.length === 0 && (
-              <div className="flex h-full w-full flex-col items-center justify-center">
-                <img
-                  src={transactionsEmptyState}
-                  alt="Nenhuma transação cadastrada"
-                />
+            {isLoading && (
+              <div className="grid h-full w-full place-items-center">
+                <Spinner className="h-10 w-10" />
+              </div>
+            )}
 
-                <p className="text-gray-700">
-                  Não encontramos nenhuma transação
-                </p>
+            {!hasTransactions && !isLoading && (
+              <div className="flex h-full w-full flex-col items-center justify-center">
+                <>
+                  <img
+                    src={transactionsEmptyState}
+                    alt="Nenhuma transação cadastrada"
+                  />
+
+                  <p className="text-gray-700">
+                    Não encontramos nenhuma transação
+                  </p>
+                </>
               </div>
             )}
           </div>
         </>
       )}
 
-      {isLoading && (
+      {isInitialLoading && (
         <div className="grid h-full w-full place-items-center">
           <Spinner className="h-10 w-10" />
         </div>
