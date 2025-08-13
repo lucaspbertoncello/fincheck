@@ -4,6 +4,7 @@ import { cn } from "../../../app/lib/cn";
 interface IDropdownProps {
   children: React.ReactNode;
   className?: string;
+  onSelect?: () => void;
 }
 
 export function DropdownRoot({ children }: IDropdownProps) {
@@ -33,9 +34,14 @@ export function DropdownContent({ children, className }: IDropdownProps) {
   );
 }
 
-export function DropdownItem({ children, className }: IDropdownProps) {
+export function DropdownItem({
+  children,
+  className,
+  onSelect,
+}: IDropdownProps) {
   return (
     <RdxDropdownMenu.Item
+      onSelect={onSelect}
       className={cn(
         "flex min-h-[48px] cursor-pointer items-center gap-4 rounded-2xl px-4 py-2 text-sm text-gray-800 transition-colors outline-none data-[highlighted]:bg-gray-50",
         className,
