@@ -177,6 +177,47 @@
     }
   }
 
+  /* Modal animations - preserving existing positioning */
+  @keyframes modal-content-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes modal-content-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  @keyframes modal-overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes modal-overlay-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
   /* Dropdown content animations using Radix data attributes */
   .dropdown-content[data-state="open"] {
     animation: dropdown-in 200ms ease-out forwards;
@@ -184,5 +225,22 @@
 
   .dropdown-content[data-state="closed"] {
     animation: dropdown-out 150ms ease-in forwards;
+  }
+
+  /* Modal animations using Radix data attributes */
+  .modal-content[data-state="open"] {
+    animation: modal-content-in 200ms ease-out forwards;
+  }
+
+  .modal-content[data-state="closed"] {
+    animation: modal-content-out 150ms ease-in forwards;
+  }
+
+  .modal-overlay[data-state="open"] {
+    animation: modal-overlay-in 200ms ease-out forwards;
+  }
+
+  .modal-overlay[data-state="closed"] {
+    animation: modal-overlay-out 150ms ease-in forwards;
   }
 }
