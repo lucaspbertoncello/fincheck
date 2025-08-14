@@ -152,3 +152,37 @@
     font-family: "DM sans", sans-serif;
   }
 }
+
+@layer utilities {
+  /* Dropdown animations */
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes dropdown-out {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95) translateY(-8px);
+    }
+  }
+
+  /* Dropdown content animations using Radix data attributes */
+  .dropdown-content[data-state="open"] {
+    animation: dropdown-in 200ms ease-out forwards;
+  }
+
+  .dropdown-content[data-state="closed"] {
+    animation: dropdown-out 150ms ease-in forwards;
+  }
+}
