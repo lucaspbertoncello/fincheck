@@ -1,19 +1,27 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MONTHS } from "../../../../../app/config/constants";
+import { useTransactionsController } from "./useTransactionsController";
 import { TransactionsSliderOption } from "./TransactionsSliderOption";
 import { TransactionsSliderNavigation } from "./TransactionsSliderNavigation";
+import { TransactionsFilterModal } from "./TransactionsFilterModal";
+import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
-import { useTransactionsController } from "./useTransactionsController";
 import { cn } from "../../../../../app/lib/cn";
 import { Spinner } from "../../../../components/Spinner";
 import transactionsEmptyState from "../../../../../assets/images/transactions-empty-state.svg";
-import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 
 export function Transactions() {
-  const { areValuesVisible, isInitialLoading, isLoading, transactions } =
-    useTransactionsController();
+  const {
+    areValuesVisible,
+    isInitialLoading,
+    isLoading,
+    transactions,
+    isTransactionsFilterModalOpen,
+    handleOpenTransactionsFilterModal,
+    handleCloseTransactionsFilterModal,
+  } = useTransactionsController();
 
   const hasTransactions = transactions.length > 0;
 
@@ -21,12 +29,20 @@ export function Transactions() {
     <div className="flex h-full w-full flex-col rounded-2xl bg-gray-100 px-4 py-8 md:p-10">
       {!isInitialLoading && (
         <>
+          <TransactionsFilterModal
+            open={isTransactionsFilterModalOpen}
+            onClose={handleCloseTransactionsFilterModal}
+          />
+
           <header>
             {/* transactions filter */}
             <div className="flex items-center justify-between">
               <TransactionTypeDropdown />
 
-              <button className="cursor-pointer">
+              <button
+                className="cursor-pointer"
+                onClick={handleOpenTransactionsFilterModal}
+              >
                 <FilterIcon />
               </button>
             </div>
