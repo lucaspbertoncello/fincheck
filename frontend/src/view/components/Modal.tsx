@@ -33,11 +33,9 @@ export function Modal({ open, children, title, rightAction }: IModalProps) {
 
             <span className="text-lg font-bold tracking-[-1px]">{title}</span>
 
-            {rightAction && (
-              <div className="grid h-12 w-12 place-items-center">
-                {rightAction}
-              </div>
-            )}
+            <div className="grid h-12 w-12 place-items-center">
+              {rightAction}
+            </div>
           </header>
 
           <div>{children}</div>
