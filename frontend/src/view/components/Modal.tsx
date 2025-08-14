@@ -27,7 +27,7 @@ export function Modal({ open, children, title, rightAction }: IModalProps) {
           )}
         >
           <header className="flex h-12 items-center justify-between text-gray-800">
-            <button className="h-12 w-12 cursor-pointer">
+            <button className="grid h-12 w-12 cursor-pointer place-items-center outline-none">
               <Cross2Icon className="h-6 w-6" />
             </button>
 
