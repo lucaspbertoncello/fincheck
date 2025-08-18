@@ -5,7 +5,7 @@ export function useTransactionsController() {
   const { areValuesVisible } = useDashboard();
 
   const [isTransactionsFilterModalOpen, setIsTransactionsFilterModalOpen] =
-    useState(true);
+    useState(false);
 
   function handleOpenTransactionsFilterModal() {
     setIsTransactionsFilterModalOpen(true);

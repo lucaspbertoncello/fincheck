@@ -8,7 +8,8 @@ export function useAccountsController() {
     isEnd: false,
   });
 
-  const { areValuesVisible, toggleValueVisibility } = useDashboard();
+  const { areValuesVisible, toggleValueVisibility, openNewAccountModal } =
+    useDashboard();
 
   const windowWidth = useWindowWidth();
 
@@ -19,6 +20,7 @@ export function useAccountsController() {
     areValuesVisible,
     toggleValueVisibility,
     isLoading: false,
+    openNewAccountModal,
     accounts: [],
   };
 }
