@@ -41,7 +41,9 @@ export function Modal({
               <Cross2Icon className="h-6 w-6" />
             </button>
 
-            <span className="text-lg font-bold tracking-[-1px]">{title}</span>
+            <Dialog.Title className="text-lg font-bold tracking-[-1px]">
+              {title}
+            </Dialog.Title>
 
             <div className="grid h-12 w-12 place-items-center">
               {rightAction}
