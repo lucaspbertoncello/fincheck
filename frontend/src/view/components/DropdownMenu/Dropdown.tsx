@@ -47,7 +47,7 @@ export function DropdownContent({ children, className }: IDropdownProps) {
     <RdxDropdownMenu.Portal>
       <RdxDropdownMenu.Content
         className={cn(
-          "z-[40] space-y-2 rounded-2xl bg-white p-2 shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]",
+          "z-[51] space-y-2 rounded-2xl bg-white p-2 shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]",
           "dropdown-content",
           className,
         )}
