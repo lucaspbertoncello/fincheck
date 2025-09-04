@@ -42,11 +42,23 @@ export function NewAccountModal() {
             {...register("name")}
           />
 
-          <Select placeholder="Tipo da conta" error={errors.type?.message}>
-            <Select.Item value="CHECKING">Conta Corrente</Select.Item>
-            <Select.Item value="INVESTMENT">Investimentos</Select.Item>
-            <Select.Item value="CASH">Dinheiro Físico</Select.Item>
-          </Select>
+          <Controller
+            control={control}
+            name="type"
+            defaultValue="CHECKING"
+            render={({ field: { onChange, value } }) => (
+              <Select
+                placeholder="Tipo da conta"
+                error={errors.type?.message}
+                onChange={onChange}
+                value={value}
+              >
+                <Select.Item value="CHECKING">Conta Corrente</Select.Item>
+                <Select.Item value="INVESTMENT">Investimentos</Select.Item>
+                <Select.Item value="CASH">Dinheiro Físico</Select.Item>
+              </Select>
+            )}
+          />
 
           <ColorsDropdownInput error={errors.color?.message} />
           <Button>Criar conta</Button>
