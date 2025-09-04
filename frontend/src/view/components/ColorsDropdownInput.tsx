@@ -7,6 +7,8 @@ import { useState } from "react";
 interface IColorsDropdownInput {
   error?: string;
   className?: string;
+  value?: string;
+  onChange: (value: string) => void;
 }
 
 interface IColor {
@@ -31,14 +33,18 @@ const colors: IColor[] = [
   { color: "#212529", bg: "#F8F9FA" },
 ] as const;
 
-export function ColorsDropdownInput({
-  error,
-  className,
-}: IColorsDropdownInput) {
-  const [selectedColor, setSelectedColor] = useState<IColor | null>(null);
+export function ColorsDropdownInput({ error, className, value, onChange }: IColorsDropdownInput) {
+  const [selectedColor, setSelectedColor] = useState<IColor | null>(() => {
+    if (!value) {
+      return null;
+    }
+
+    return colors.find((color) => color.color === value) ?? null;
+  });
 
   function handleSelectColor(color: IColor) {
     setSelectedColor(color);
+    onChange?.(color.color);
   }
 
   return (
@@ -68,10 +74,7 @@ export function ColorsDropdownInput({
 
         <DropdownMenu.Content className="grid grid-cols-4">
           {colors.map((color) => (
-            <DropdownMenu.Item
-              onSelect={() => handleSelectColor(color)}
-              key={color.color}
-            >
+            <DropdownMenu.Item onSelect={() => handleSelectColor(color)} key={color.color}>
               <ColorIcon bg={color.bg} color={color.color} />
             </DropdownMenu.Item>
           ))}
