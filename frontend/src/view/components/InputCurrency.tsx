@@ -3,16 +3,19 @@ import { NumericFormat } from "react-number-format";
 
 interface IInputCurrencyProps {
   error?: string;
+  value?: string;
+  onChange: (value: string) => void;
 }
 
-export function InputCurrency({ error }: IInputCurrencyProps) {
+export function InputCurrency({ error, onChange, value }: IInputCurrencyProps) {
   return (
     <div>
       <NumericFormat
+        value={value}
         thousandSeparator="."
         decimalSeparator=","
-        defaultValue="0.00"
         className="w-full text-3xl font-bold tracking-[-1px] text-gray-800 outline-none"
+        onChange={(event) => onChange(event.target.value)}
       />
 
       {error && (

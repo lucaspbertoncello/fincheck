@@ -1,3 +1,4 @@
+import { Controller } from "react-hook-form";
 import { Button } from "../../../../components/Button";
 import { ColorsDropdownInput } from "../../../../components/ColorsDropdownInput";
 import { Input } from "../../../../components/Input";
@@ -7,34 +8,47 @@ import { Select } from "../../../../components/Select";
 import { useNewAccountModalController } from "./useNewAccountModalController";
 
 export function NewAccountModal() {
-  const { closeNewAccountModal, isNewAccountModalOpen } =
+  const { closeNewAccountModal, isNewAccountModalOpen, register, errors, handleSubmit, control } =
     useNewAccountModalController();
 
   return (
-    <Modal
-      title="Nova conta"
-      open={isNewAccountModalOpen}
-      onClose={closeNewAccountModal}
-    >
-      <form action="">
+    <Modal title="Nova conta" open={isNewAccountModalOpen} onClose={closeNewAccountModal}>
+      <form onSubmit={handleSubmit}>
         <div>
-          <span className="text-sm tracking-[-0.5px] text-gray-600">Saldo</span>
+          <span className="text-sm tracking-[-0.5px] text-gray-600">Saldo inicial</span>
           <div className="flex items-center gap-2">
             <span className="text-lg tracking-[-0.5px] text-gray-600">R$</span>
-            <InputCurrency />
+
+            <Controller
+              control={control}
+              name="initialBalance"
+              defaultValue="0"
+              render={({ field: { onChange, value } }) => (
+                <InputCurrency
+                  error={errors.initialBalance?.message}
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
           </div>
         </div>
 
         <div className="mt-10 space-y-4">
-          <Input type="text" placeholder="Nome da conta" />
+          <Input
+            type="text"
+            placeholder="Nome da conta"
+            errors={errors.name?.message}
+            {...register("name")}
+          />
 
-          <Select placeholder="Tipo da conta">
+          <Select placeholder="Tipo da conta" error={errors.type?.message}>
             <Select.Item value="CHECKING">Conta Corrente</Select.Item>
             <Select.Item value="INVESTMENT">Investimentos</Select.Item>
             <Select.Item value="CASH">Dinheiro Físico</Select.Item>
           </Select>
 
-          <ColorsDropdownInput />
+          <ColorsDropdownInput error={errors.color?.message} />
           <Button>Criar conta</Button>
         </div>
       </form>
