@@ -3,8 +3,8 @@ import { NumericFormat } from "react-number-format";
 
 interface IInputCurrencyProps {
   error?: string;
-  value?: string | number;
-  onChange?: (value: string | number) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export function InputCurrency({ error, onChange, value }: IInputCurrencyProps) {

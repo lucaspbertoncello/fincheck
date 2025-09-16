@@ -2,15 +2,19 @@ import z from "zod";
 import { useDashboard } from "../../../../../app/hooks/useDashboard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { bankAccountsService } from "../../../../../app/services/bankAccountsService";
+import toast from "react-hot-toast";
+import { currencyStringToNumber } from "../../../../../app/utils/currencyStringToNumber";
 
 const schema = z.object({
-  name: z.string().nonempty("Nome da conta é obrigatório"),
   initialBalance: z.string().nonempty("Saldo inicial é obrigatório"),
+  name: z.string().nonempty("Nome da Conta é obrigatório"),
   type: z.enum(["CHECKING", "INVESTMENT", "CASH"]),
   color: z.string().nonempty("Cor é obrigatória"),
 });
 
-type FormData = z.infer<typeof schema>;
+type TFormData = z.infer<typeof schema>;
 
 export function useNewAccountModalController() {
   const { closeNewAccountModal, isNewAccountModalOpen } = useDashboard();
@@ -20,19 +24,26 @@ export function useNewAccountModalController() {
     handleSubmit: hookFormSubmit,
     formState: { errors },
     control,
-  } = useForm<FormData>({
+  } = useForm<TFormData>({
     resolver: zodResolver(schema),
-    mode: "onBlur",
-    defaultValues: {
-      name: "",
-      initialBalance: "0",
-      type: "CHECKING",
-      color: "",
-    },
   });
 
-  const handleSubmit = hookFormSubmit((data) => {
-    console.log(data);
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: TFormData) =>
+      bankAccountsService.create({
+        ...data,
+        initialBalance: currencyStringToNumber(data.initialBalance),
+      }),
+  });
+
+  const handleSubmit = hookFormSubmit(async (data) => {
+    try {
+      await mutateAsync(data);
+      toast.success("Conta cadastrada com sucesso");
+      closeNewAccountModal();
+    } catch {
+      toast.error("Erro ao criar conta bancária");
+    }
   });
 
   return {
@@ -42,5 +53,6 @@ export function useNewAccountModalController() {
     handleSubmit,
     errors,
     control,
+    isPending,
   };
 }

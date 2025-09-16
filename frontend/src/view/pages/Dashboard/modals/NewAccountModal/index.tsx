@@ -8,8 +8,15 @@ import { Select } from "../../../../components/Select";
 import { useNewAccountModalController } from "./useNewAccountModalController";
 
 export function NewAccountModal() {
-  const { closeNewAccountModal, isNewAccountModalOpen, register, errors, handleSubmit, control } =
-    useNewAccountModalController();
+  const {
+    closeNewAccountModal,
+    isNewAccountModalOpen,
+    register,
+    errors,
+    handleSubmit,
+    control,
+    isPending,
+  } = useNewAccountModalController();
 
   return (
     <Modal title="Nova conta" open={isNewAccountModalOpen} onClose={closeNewAccountModal}>
@@ -73,7 +80,7 @@ export function NewAccountModal() {
             )}
           />
 
-          <Button>Criar conta</Button>
+          <Button isLoading={isPending}>Criar conta</Button>
         </div>
       </form>
     </Modal>
