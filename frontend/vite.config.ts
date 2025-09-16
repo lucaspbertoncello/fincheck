@@ -7,5 +7,15 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     open: true,
+    hmr: {
+      overlay: true,
+    },
+    watch: {
+      usePolling: true,
+      interval: 1000,
+    },
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom"],
   },
 });
