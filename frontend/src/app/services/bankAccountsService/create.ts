@@ -1,3 +1,4 @@
+import type { BankAccount } from "../../entities/BankAccount";
 import { httpClient } from "../httpClient";
 
 interface IBankAccountRequest {
@@ -8,6 +9,6 @@ interface IBankAccountRequest {
 }
 
 export async function create(params: IBankAccountRequest) {
-  const data = await httpClient.post("/bank-accounts", params);
+  const data = await httpClient.post<BankAccount>("/bank-accounts", params);
   return data;
 }
