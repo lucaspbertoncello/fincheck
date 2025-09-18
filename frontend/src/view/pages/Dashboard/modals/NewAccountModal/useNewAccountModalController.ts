@@ -2,7 +2,7 @@ import z from "zod";
 import { useDashboard } from "../../../../../app/hooks/useDashboard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { bankAccountsService } from "../../../../../app/services/bankAccountsService";
 import toast from "react-hot-toast";
 import { currencyStringToNumber } from "../../../../../app/utils/currencyStringToNumber";
@@ -29,6 +29,8 @@ export function useNewAccountModalController() {
     resolver: zodResolver(schema),
   });
 
+  const { invalidateQueries } = useQueryClient();
+
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: TFormData) =>
       bankAccountsService.create({
@@ -42,7 +44,8 @@ export function useNewAccountModalController() {
       await mutateAsync(data);
       toast.success("Conta cadastrada com sucesso");
       closeNewAccountModal();
-      reset();
+      invalidateQueries({ queryKey: ["bankAccounts"] }); // bankAccount list update when create another
+      reset(); // reset form fields after submit
     } catch {
       toast.error("Erro ao criar conta bancária");
     }

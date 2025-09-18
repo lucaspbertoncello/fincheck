@@ -20,6 +20,7 @@ export function Accounts() {
     isLoading,
     accounts,
     openNewAccountModal,
+    totalAccountsBalance,
   } = useAccountsController();
 
   return (
@@ -28,9 +29,7 @@ export function Accounts() {
         <>
           {/* balance area */}
           <header>
-            <span className="block tracking-[-0.5px] text-white">
-              Saldo total
-            </span>
+            <span className="block tracking-[-0.5px] text-white">Saldo total</span>
 
             <div className="flex items-center gap-2">
               <strong
@@ -39,7 +38,7 @@ export function Accounts() {
                   !areValuesVisible && "blur-md",
                 )}
               >
-                {formatCurrency(500000.0)}
+                {formatCurrency(totalAccountsBalance)}
               </strong>
 
               <button
@@ -66,13 +65,8 @@ export function Accounts() {
                     });
                   }}
                 >
-                  <header
-                    slot="container-start"
-                    className="mb-4 flex items-center justify-between"
-                  >
-                    <strong className="text-lg tracking-[-1px] text-white">
-                      Minhas contas
-                    </strong>
+                  <header slot="container-start" className="mb-4 flex items-center justify-between">
+                    <strong className="text-lg tracking-[-1px] text-white">Minhas contas</strong>
 
                     <AccountsSliderNavigation
                       isBeginning={sliderState.isBeginning}
@@ -80,32 +74,16 @@ export function Accounts() {
                     />
                   </header>
 
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#7950f2"
-                      bankAccountName="Nubank"
-                      balance={9845.33}
-                      bankAccountIcon="CASH"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#ff7f08"
-                      bankAccountName="Inter"
-                      balance={333.21}
-                      bankAccountIcon="CHECKING"
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#ba1e62"
-                      bankAccountName="Bradesco"
-                      balance={100000.0}
-                      bankAccountIcon="INVESTMENT"
-                    />
-                  </SwiperSlide>
+                  {accounts.map((account) => (
+                    <SwiperSlide>
+                      <AccountCard
+                        color={account.color}
+                        bankAccountName={account.name}
+                        balance={account.currentBalance}
+                        bankAccountIcon={account.type}
+                      />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             )}
@@ -113,9 +91,7 @@ export function Accounts() {
             {accounts.length === 0 && (
               <>
                 <header slot="container-start" className="mb-4">
-                  <strong className="text-lg tracking-[-1px] text-white">
-                    Minhas contas
-                  </strong>
+                  <strong className="text-lg tracking-[-1px] text-white">Minhas contas</strong>
                 </header>
 
                 <button
