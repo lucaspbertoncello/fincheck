@@ -24,6 +24,7 @@ export function useNewAccountModalController() {
     handleSubmit: hookFormSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<TFormData>({
     resolver: zodResolver(schema),
   });
@@ -41,6 +42,7 @@ export function useNewAccountModalController() {
       await mutateAsync(data);
       toast.success("Conta cadastrada com sucesso");
       closeNewAccountModal();
+      reset();
     } catch {
       toast.error("Erro ao criar conta bancária");
     }
