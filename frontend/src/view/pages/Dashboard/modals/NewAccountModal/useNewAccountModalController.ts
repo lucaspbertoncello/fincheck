@@ -29,7 +29,7 @@ export function useNewAccountModalController() {
     resolver: zodResolver(schema),
   });
 
-  const { invalidateQueries } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: TFormData) =>
@@ -44,7 +44,7 @@ export function useNewAccountModalController() {
       await mutateAsync(data);
       toast.success("Conta cadastrada com sucesso");
       closeNewAccountModal();
-      invalidateQueries({ queryKey: ["bankAccounts"] }); // bankAccount list update when create another
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] }); // bankAccount list update when create another
       reset(); // reset form fields after submit
     } catch {
       toast.error("Erro ao criar conta bancária");
