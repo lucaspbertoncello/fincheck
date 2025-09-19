@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { bankAccountsService } from "../../../../../app/services/bankAccountsService";
 import toast from "react-hot-toast";
 import { currencyStringToNumber } from "../../../../../app/utils/currencyStringToNumber";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const schema = z.object({
   initialBalance: z.string().nonempty("Saldo inicial é obrigatório"),
@@ -19,6 +19,15 @@ type TFormData = z.infer<typeof schema>;
 
 export function useEditAccountModalController() {
   const { isEditAccountModalOpen, closeEditAccountModal, accountBeingEdited } = useDashboard();
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState<boolean>(false);
+
+  function openConfirmDeleteModal() {
+    setIsConfirmDeleteModalOpen(true);
+  }
+
+  function closeConfirmDeleteModal() {
+    setIsConfirmDeleteModalOpen(false);
+  }
 
   const {
     register,
@@ -73,5 +82,8 @@ export function useEditAccountModalController() {
     errors,
     control,
     isPending,
+    openConfirmDeleteModal,
+    closeConfirmDeleteModal,
+    isConfirmDeleteModalOpen,
   };
 }
