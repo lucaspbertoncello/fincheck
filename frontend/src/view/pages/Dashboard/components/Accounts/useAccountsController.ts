@@ -10,7 +10,8 @@ export function useAccountsController() {
     isEnd: false,
   });
 
-  const { areValuesVisible, toggleValueVisibility, openNewAccountModal } = useDashboard();
+  const { areValuesVisible, toggleValueVisibility, openNewAccountModal, openEditAccountModal } =
+    useDashboard();
 
   const windowWidth = useWindowWidth();
 
@@ -33,6 +34,7 @@ export function useAccountsController() {
     toggleValueVisibility,
     isLoading: isFetching,
     openNewAccountModal,
+    openEditAccountModal,
     accounts: data ?? [],
     totalAccountsBalance,
   };

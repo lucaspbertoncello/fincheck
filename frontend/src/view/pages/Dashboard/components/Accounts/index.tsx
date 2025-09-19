@@ -20,6 +20,7 @@ export function Accounts() {
     isLoading,
     accounts,
     openNewAccountModal,
+    openEditAccountModal,
     totalAccountsBalance,
   } = useAccountsController();
 
@@ -75,7 +76,7 @@ export function Accounts() {
                   </header>
 
                   {accounts.map((account) => (
-                    <SwiperSlide>
+                    <SwiperSlide onClick={() => openEditAccountModal(account)} key={account.id}>
                       <AccountCard
                         color={account.color}
                         bankAccountName={account.name}

@@ -4,6 +4,7 @@ import { Avatar } from "../../components/Avatar";
 import { Accounts } from "./components/Accounts";
 import { FAB } from "./components/FAB";
 import { Transactions } from "./components/Transactions";
+import { EditAccountModal } from "./modals/EditAccountModal";
 import { NewAccountModal } from "./modals/NewAccountModal";
 import { NewTransactionModal } from "./modals/NewTransactionModal";
 
@@ -28,6 +29,7 @@ export function Dashboard() {
 
         <FAB />
         <NewAccountModal />
+        <EditAccountModal />
         <NewTransactionModal />
       </div>
     </DashboardProvider>

@@ -20,7 +20,7 @@ export function AccountCard({
 
   return (
     <div
-      className="flex h-[200px] w-full flex-col justify-between rounded-2xl border-b-4 bg-white p-4"
+      className="flex h-[200px] w-full cursor-pointer flex-col justify-between rounded-2xl border-b-4 bg-white p-4"
       style={{ borderColor: color }}
     >
       <header>

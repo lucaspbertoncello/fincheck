@@ -1,17 +1,24 @@
 import { createContext } from "react";
+import type { BankAccount } from "../../entities/BankAccount";
 
 interface IDashboardContext {
-  areValuesVisible: boolean;
+  // new account modal
   isNewAccountModalOpen: boolean;
-  isNewTransactionModalOpen: boolean;
-  newTransactionType: "INCOME" | "EXPENSE" | null;
-  toggleValueVisibility: () => void;
   openNewAccountModal: () => void;
   closeNewAccountModal: () => void;
+  // edit account modal
+  isEditAccountModalOpen: boolean;
+  accountBeingEdited: BankAccount | null;
+  openEditAccountModal: (bankAccount: BankAccount) => void;
+  closeEditAccountModal: () => void;
+  // new transaction modal
   openNewTransactionModal: (type: "INCOME" | "EXPENSE") => void;
   closeNewTransactionModal: () => void;
+  isNewTransactionModalOpen: boolean;
+  newTransactionType: "INCOME" | "EXPENSE" | null;
+  // values visibility
+  toggleValueVisibility: () => void;
+  areValuesVisible: boolean;
 }
 
-export const DashboardContext = createContext<IDashboardContext>(
-  {} as IDashboardContext,
-);
+export const DashboardContext = createContext<IDashboardContext>({} as IDashboardContext);
