@@ -21,11 +21,15 @@ export function EditAccountModal() {
     openConfirmDeleteModal,
     closeConfirmDeleteModal,
     isConfirmDeleteModalOpen,
+    handleDeleteAccount,
+    isDeletingAccount,
   } = useEditAccountModalController();
 
   if (isConfirmDeleteModalOpen) {
     return (
       <ConfirmDeleteModal
+        onConfirm={handleDeleteAccount}
+        isDeleting={isDeletingAccount}
         isOpen={isConfirmDeleteModalOpen}
         onClose={closeConfirmDeleteModal}
         title="Tem certeza que deseja excluir essa conta?"

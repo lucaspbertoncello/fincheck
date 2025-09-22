@@ -52,7 +52,8 @@ export function useEditAccountModalController() {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending } = useMutation({
+  // update account
+  const { mutateAsync: updateAccount, isPending } = useMutation({
     mutationFn: (data: TFormData) =>
       bankAccountsService.update({
         id: accountBeingEdited!.id, // non null assertion operator
@@ -63,9 +64,26 @@ export function useEditAccountModalController() {
       }),
   });
 
+  // delete account
+  const { mutateAsync: deleteAccount, isPending: isDeletingAccount } = useMutation({
+    mutationFn: () => bankAccountsService.delete(accountBeingEdited!.id),
+  });
+
+  async function handleDeleteAccount() {
+    try {
+      await deleteAccount();
+      toast.success("Conta excluída com sucesso");
+      closeConfirmDeleteModal();
+      closeEditAccountModal();
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] }); // bankAccount list update when delete another
+    } catch {
+      toast.error("Erro ao excluir conta bancária");
+    }
+  }
+
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      await mutateAsync(data);
+      await updateAccount(data);
       toast.success("Conta atualizada com sucesso");
       closeEditAccountModal();
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] }); // bankAccount list update when create another
@@ -85,5 +103,7 @@ export function useEditAccountModalController() {
     openConfirmDeleteModal,
     closeConfirmDeleteModal,
     isConfirmDeleteModalOpen,
+    handleDeleteAccount,
+    isDeletingAccount,
   };
 }

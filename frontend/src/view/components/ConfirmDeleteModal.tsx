@@ -5,6 +5,8 @@ import { Modal } from "./Modal";
 interface IConfirmDeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm: () => void;
+  isDeleting?: boolean;
   title: string;
   description?: string;
 }
@@ -14,6 +16,8 @@ export function ConfirmDeleteModal({
   onClose,
   title,
   description,
+  isDeleting = false,
+  onConfirm,
 }: IConfirmDeleteModalProps) {
   return (
     <Modal open={isOpen} title="Excluir" onClose={onClose}>
@@ -27,7 +31,9 @@ export function ConfirmDeleteModal({
       </div>
 
       <div className="mt-10 space-y-4">
-        <Button className="bg-red-900 hover:bg-red-800">Sim, desejo excluir</Button>
+        <Button onClick={onConfirm} isLoading={isDeleting} className="bg-red-900 hover:bg-red-800">
+          Sim, desejo excluir
+        </Button>
         <Button
           onClick={onClose}
           className="border border-gray-800 bg-transparent text-gray-800 hover:bg-transparent"
