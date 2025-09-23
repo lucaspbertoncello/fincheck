@@ -1,9 +1,5 @@
 import * as RdxSelect from "@radix-ui/react-select";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  CrossCircledIcon,
-} from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronUpIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 import { cn } from "../../app/lib/cn";
 
 interface ISelectProps {
@@ -15,14 +11,7 @@ interface ISelectProps {
   children: React.ReactNode;
 }
 
-export function Select({
-  className,
-  error,
-  placeholder,
-  value,
-  onChange,
-  children,
-}: ISelectProps) {
+export function Select({ className, error, placeholder, value, onChange, children }: ISelectProps) {
   return (
     <div>
       <RdxSelect.Root value={value} onValueChange={onChange}>
