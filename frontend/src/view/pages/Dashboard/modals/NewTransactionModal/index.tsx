@@ -16,6 +16,8 @@ export function NewTransactionModal() {
     handleSubmit,
     errors,
     control,
+    accounts,
+    categories,
   } = useNewTransactionModalController();
 
   const transactionType = newTransactionType === "EXPENSE" ? "despesa" : "receita";
@@ -63,9 +65,11 @@ export function NewTransactionModal() {
                 value={value}
                 error={errors.categoryId?.message}
               >
-                <Select.Item value="CHECKING">Conta Corrente</Select.Item>
-                <Select.Item value="INVESTMENT">Investimentos</Select.Item>
-                <Select.Item value="CASH">Dinheiro Físico</Select.Item>
+                {categories.map((category) => (
+                  <Select.Item key={category.id} value={category.id}>
+                    {category.name}
+                  </Select.Item>
+                ))}
               </Select>
             )}
           />
@@ -81,9 +85,11 @@ export function NewTransactionModal() {
                 error={errors.bankAccountId?.message}
                 placeholder={newTransactionType === "EXPENSE" ? "Pagar com" : "Receber com"}
               >
-                <Select.Item value="CHECKING">Conta Corrente</Select.Item>
-                <Select.Item value="INVESTMENT">Investimentos</Select.Item>
-                <Select.Item value="CASH">Dinheiro Físico</Select.Item>
+                {accounts.map((account) => (
+                  <Select.Item key={account.id} value={account.id}>
+                    {account.name}
+                  </Select.Item>
+                ))}
               </Select>
             )}
           />

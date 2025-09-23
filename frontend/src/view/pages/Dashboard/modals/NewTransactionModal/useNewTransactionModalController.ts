@@ -2,6 +2,8 @@ import z from "zod";
 import { useDashboard } from "../../../../../app/hooks/useDashboard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useBankAccounts } from "../../../../../app/hooks/useBankAccounts";
+import { useCategories } from "../../../../../app/hooks/useCategories";
 
 const schema = z.object({
   value: z.string().nonempty("Valor é obrigatório"),
@@ -30,6 +32,9 @@ export function useNewTransactionModalController() {
     console.log(data);
   });
 
+  const { data } = useBankAccounts();
+  const { categories } = useCategories();
+
   return {
     closeNewTransactionModal,
     isNewTransactionModalOpen,
@@ -38,5 +43,7 @@ export function useNewTransactionModalController() {
     handleSubmit,
     errors,
     control,
+    accounts: data ?? [],
+    categories: categories ?? [],
   };
 }
